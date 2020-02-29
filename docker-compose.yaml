@@ -1,0 +1,25 @@
+# Test
+version: '2.4'
+
+services:
+  postgres:
+    image: postgres:10
+    container_name: database
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: "typeormtest"
+      POSTGRES_PASSWORD: "password"
+
+  redis:
+    image: redis:5.0.7
+    container_name: sessionStore
+    ports:
+      - 6379:6379
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
