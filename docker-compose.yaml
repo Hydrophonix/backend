@@ -12,14 +12,9 @@ services:
       POSTGRES_USER: "typeormtest"
       POSTGRES_PASSWORD: "password"
 
-  redis:
-    image: redis:5.0.7
-    container_name: sessionStore
-    ports:
-      - 6379:6379
-
   adminer:
     image: adminer
+    container_name: adminer
     restart: always
     ports:
       - 8080:8080

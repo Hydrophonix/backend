@@ -1,41 +1,24 @@
 // Core
 import "reflect-metadata";
+import cors from 'cors';
 import express from "express";
-import session from "express-session";
-import redis from 'redis';
-import connectRedis from 'connect-redis';
+import cookieParser from "cookie-parser";
 
 // Instruments
-import { getSessionSecret } from './utils';
-import { appName } from './constants';
+// import { refreshToken } from './routes';
 
 const app = express();
-const RedisStore = connectRedis(session);
-const redisClient = redis.createClient()
 
-const sessionOptions = {
-  store: new RedisStore(new RedisStore({ client: redisClient })),
-  name: `${appName}:sid`,
-  secret: getSessionSecret(),
-  resave: false,
-  saveUninitialized: false,
-  cookie: {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    maxAge: 1000 * 60 * 60 * 24 * 7 * 365 // 7 years
-  }
-}
+app.use(cookieParser());
+app.use(cors({ credentials: false, origin: 'http://localhost:3000' }))
 
-app.use(session(sessionOptions))
+app.use((req, _res, next) => {
+// console.log('<<<TESTLOG>>>: res', res);
+console.log('<<<TESTLOG>>>: req', req.body);
+next();
+})
 
-// Handle redis connection errors
-// TODO: Add some handling
-// app.use(function(req, __, next) {
-//   if (!req.session) {
-//     return next(new Error('oh no')) // handle error
-//   }
-//   next() // otherwise continue
-// })
+// app.post("/refresh_token", refreshToken);
 
 export { app }
 

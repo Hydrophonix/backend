@@ -1,3 +1,4 @@
+// Core
 import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from "typeorm";
 import { Field, ObjectType } from "type-graphql";
 
@@ -5,11 +6,14 @@ import { Field, ObjectType } from "type-graphql";
 @Entity()
 export class User extends BaseEntity {
   @Field()
-  @PrimaryGeneratedColumn("uuid")
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
+  @Column('int', { default: 0 })
+  tokenVersion: number;
+
   @Field()
-  @Column("text", { unique: true })
+  @Column('text', { unique: true })
   email: string;
 
   @Column()

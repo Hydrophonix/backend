@@ -4,21 +4,21 @@ import { ApolloServer } from "apollo-server-express";
 import { buildSchema } from "type-graphql";
 
 // Resolvers
-import { AuthResolver } from "./resolvers/AuthResolver";
-import { BookResolver } from "./resolvers/BookResolver";
+import { AuthResolver } from './resolvers';
+// import { BookResolver } from "./resolvers/BookResolver";
 
 // Instruments
 import { app } from './server';
 import { connectDatabase } from './database';
-
-const port = process.env.PORT || 4000;
+import { PORT } from './constants';
 
 (async () => {
   await connectDatabase();
 
+  // https://www.apollographql.com/docs/apollo-server/api/apollo-server/
   const apolloServer = new ApolloServer({
     schema: await buildSchema({
-      resolvers: [AuthResolver, BookResolver],
+      resolvers: [AuthResolver],
       validate: false
     }),
     context: ({ req, res }) => ({ req, res })
@@ -26,8 +26,12 @@ const port = process.env.PORT || 4000;
 
   apolloServer.applyMiddleware({ app, cors: false });
 
-  app.listen(port, () => {
-    console.log(`server started at http://localhost:${port}/graphql`);
+  app.listen(PORT, () => {
+    console.log(`server started at http://localhost:${PORT}/graphql`);
   });
 })();
+
+
+// Apollo healthcheck endpoint
+// /.well-known/apollo/server-health
 
