@@ -4,9 +4,6 @@ import { InputType, ObjectType, Field } from "type-graphql";
 // Entities
 import { User } from '../entity';
 
-// Types
-import { FieldError } from './index'
-
 @InputType()
 export class AuthInput {
   @Field()
@@ -18,14 +15,11 @@ export class AuthInput {
 
 @ObjectType()
 export class AuthResponseWeb {
-  @Field()
+  @Field(() => String)
   accessToken: string;
 
   @Field(() => User)
   user: User;
-
-  @Field(() => [FieldError], { nullable: true })
-  errors?: FieldError[];
 }
 
 @ObjectType()

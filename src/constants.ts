@@ -8,4 +8,5 @@ export const REFRESH_TOKEN_SECRET: string = process.env.REFRESH_TOKEN_SECRET || 
 // App
 export const ACCESS_TOKEN_DURATION: string = '15m';
 export const REFRESH_TOKEN_DURATION: string = '7d';
+export const COOKIE_MAX_AGE: number = 1000 * 60 * 60 * 24 *  7; // Should be equal to REFRESH_TOKEN_DURATION
 export const SALT_ROUNDS: number = 12;

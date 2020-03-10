@@ -5,7 +5,6 @@ import { buildSchema } from "type-graphql";
 
 // Resolvers
 import { AuthResolver } from './resolvers';
-// import { BookResolver } from "./resolvers/BookResolver";
 
 // Instruments
 import { app } from './server';

@@ -2,7 +2,7 @@
 import { Response } from "express";
 
 // Instruments
-import { APP_NAME } from '../constants';
+import { APP_NAME, COOKIE_MAX_AGE } from '../constants';
 
 export const sendRefreshToken = (res: Response, token: string) => {
   res.cookie(
@@ -10,7 +10,8 @@ export const sendRefreshToken = (res: Response, token: string) => {
      token,
     {
       httpOnly: true,
-      path: "/refresh_token"
+      path: "/refresh_token",
+      maxAge: COOKIE_MAX_AGE
     }
   );
 };

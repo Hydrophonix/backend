@@ -15,14 +15,18 @@ export class UserResolver {
  
   @Query(() => User, { nullable: true })
   @UseMiddleware(isAuth)
-  me(@Ctx()  { payload }: MyContext) {
+  me(@Ctx()  { userId }: MyContext) {
 
-   
     // try {
-      return User.findOne(payload!.userId);
+      return User.findOne(userId);
     // } catch (err) {
       // console.log(err);
       // return null;
     // }
+  }
+
+  @Query(() => [User])
+  users() {
+    return User.find()
   }
 }
