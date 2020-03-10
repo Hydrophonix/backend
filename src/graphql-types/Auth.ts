@@ -1,5 +1,5 @@
 // Core
-import { InputType, ObjectType, Field } from "type-graphql";
+import { InputType, ObjectType, Field } from 'type-graphql';
 
 // Entities
 import { User } from '../entity';

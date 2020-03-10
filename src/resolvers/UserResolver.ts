@@ -12,21 +12,19 @@ import { MyContext } from '../graphql-types';
 
 @Resolver()
 export class UserResolver {
- 
   @Query(() => User, { nullable: true })
   @UseMiddleware(isAuth)
-  me(@Ctx()  { userId }: MyContext) {
-
-    // try {
-      return User.findOne(userId);
+    me(@Ctx()  { userId }: MyContext) {
+        // try {
+        return User.findOne(userId);
     // } catch (err) {
-      // console.log(err);
-      // return null;
+        // console.log(err);
+        // return null;
     // }
-  }
+    }
 
-  @Query(() => [User])
+  @Query(() => [ User ])
   users() {
-    return User.find()
+      return User.find();
   }
 }

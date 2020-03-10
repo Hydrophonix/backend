@@ -5,6 +5,7 @@
 /build/
 /coverage/
 /flow-coverage/
+/dist/
 
 # Files
 *.log

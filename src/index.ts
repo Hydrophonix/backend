@@ -1,7 +1,7 @@
 // Core
-import "reflect-metadata";
-import { ApolloServer } from "apollo-server-express";
-import { buildSchema } from "type-graphql";
+import 'reflect-metadata';
+import { ApolloServer } from 'apollo-server-express';
+import { buildSchema } from 'type-graphql';
 
 // Resolvers
 import { AuthResolver } from './resolvers';
@@ -12,22 +12,22 @@ import { connectDatabase } from './database';
 import { PORT } from './constants';
 
 (async () => {
-  await connectDatabase();
+    await connectDatabase();
 
-  // https://www.apollographql.com/docs/apollo-server/api/apollo-server/
-  const apolloServer = new ApolloServer({
-    schema: await buildSchema({
-      resolvers: [AuthResolver],
-      validate: false
-    }),
-    context: ({ req, res }) => ({ req, res })
-  });
+    // https://www.apollographql.com/docs/apollo-server/api/apollo-server/
+    const apolloServer = new ApolloServer({
+        schema: await buildSchema({
+            resolvers: [ AuthResolver ],
+            validate:  false,
+        }),
+        context: ({ req, res }) => ({ req, res }),
+    });
 
-  apolloServer.applyMiddleware({ app, cors: false });
+    apolloServer.applyMiddleware({ app, cors: false });
 
-  app.listen(PORT, () => {
-    console.log(`server started at http://localhost:${PORT}/graphql`);
-  });
+    app.listen(PORT, () => {
+        console.log(`server started at http://localhost:${PORT}/graphql`);
+    });
 })();
 
 

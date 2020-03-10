@@ -1,5 +1,5 @@
 // Env
-export const NODE_ENV: string = process.env.NODE_ENV || "development";
+export const NODE_ENV: string = process.env.NODE_ENV || 'development';
 export const APP_NAME: string = process.env.APP_NAME || 'osbb';
 export const PORT: number | string = process.env.PORT || 4000;
 export const ACCESS_TOKEN_SECRET: string = process.env.ACCESS_TOKEN_SECRET || 'superSecretOne';

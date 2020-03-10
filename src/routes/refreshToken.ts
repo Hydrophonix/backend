@@ -1,6 +1,6 @@
 // Core
 import { verify } from 'jsonwebtoken';
-import { Request, Response } from "express";
+import { Request, Response } from 'express';
 
 // Entities
 import { User } from '../entity';
@@ -10,40 +10,40 @@ import { sendRefreshToken, createAccessToken, createRefreshToken } from '../util
 import { REFRESH_TOKEN_SECRET, APP_NAME } from '../constants';
 
 const NO_TOKEN = {
-  ok: false,
-  accessToken: ''
-}
+    ok:          false,
+    accessToken: '',
+};
 
 export const refreshToken = async (req: Request, res: Response) => {
-  const tokenKey: string = req.cookies[`${APP_NAME}_jid`];
+    const tokenKey: string = req.cookies[ `${APP_NAME}_jid` ];
 
-  if (!tokenKey) {
-    return res.send(NO_TOKEN);
-  }
+    if (!tokenKey) {
+        return res.send(NO_TOKEN);
+    }
 
-  let token: any  = null;
-  
-  try {
-    token = verify(tokenKey, REFRESH_TOKEN_SECRET!);
-  } catch (err) {
-    console.log(err);
+    let token: any  = null;
 
-    return res.send(NO_TOKEN);
-  }
+    try {
+        token = verify(tokenKey, REFRESH_TOKEN_SECRET!);
+    } catch (error) {
+        console.log(error);
 
-  // token is valid and
-  // we can send back an access token
-  const user = await User.findOne({ id: token.userId });
+        return res.send(NO_TOKEN);
+    }
 
-  if (!user) {
-    return res.send(NO_TOKEN);
-  }
+    // token is valid and
+    // we can send back an access token
+    const user = await User.findOne({ id: token.userId });
 
-  if (user.tokenVersion !== token.tokenVersion) {
-    return res.send(NO_TOKEN);
-  }
+    if (!user) {
+        return res.send(NO_TOKEN);
+    }
 
-  sendRefreshToken(res, createRefreshToken(user));
+    if (user.tokenVersion !== token.tokenVersion) {
+        return res.send(NO_TOKEN);
+    }
 
-  return res.send({ ok: true, accessToken: createAccessToken(user) });
-}
+    sendRefreshToken(res, createRefreshToken(user));
+
+    return res.send({ ok: true, accessToken: createAccessToken(user) });
+};
