@@ -1,7 +1,7 @@
 // Core
 import bcrypt from 'bcryptjs';
 import { Resolver, Mutation, Arg, Ctx } from 'type-graphql';
-import { AuthenticationError } from 'apollo-server-express';
+import { UserInputError } from 'apollo-server-express';
 
 // Entity
 import { User } from '../entity/User';
@@ -15,9 +15,9 @@ import { AuthInput, AuthResponseWeb, MyContext } from '../graphql-types';
 
 @Resolver()
 export class AuthResolver {
-  // ----------------------------------------------------------------------------------------------
+  // ==============================================================================================
   // Register Web
-  // ----------------------------------------------------------------------------------------------
+  // ==============================================================================================
   @Mutation(() => AuthResponseWeb)
     async registerWeb(
     @Arg('input') { email, password }: AuthInput,
@@ -26,7 +26,7 @@ export class AuthResolver {
         const existingUser = await User.findOne({ email });
 
         if (existingUser) {
-            throw new AuthenticationError('Register');
+            throw new UserInputError('Register');
         }
 
         const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
@@ -56,13 +56,13 @@ export class AuthResolver {
       const user = await User.findOne({ where: { email } });
 
       if (!user) {
-          throw new AuthenticationError('login');
+          throw new UserInputError('login');
       }
 
       const valid = await bcrypt.compare(password, user.password);
 
       if (!valid) {
-          throw new AuthenticationError('login');
+          throw new UserInputError('login');
       }
 
       const accessToken = createAccessToken(user);
