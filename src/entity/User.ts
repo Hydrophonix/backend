@@ -1,29 +1,34 @@
 // Core
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from 'typeorm';
-import { Field, ObjectType } from 'type-graphql';
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany } from 'typeorm';
+import { Field, ObjectType, ID } from 'type-graphql';
+import { IsEmail } from 'class-validator';
+
+// Entity
+import { Todo } from './Todo';
 
 @ObjectType()
 @Entity()
 export class User extends BaseEntity {
-  @Field()
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+    @Field(() => ID)
+    @PrimaryGeneratedColumn('uuid')
+    id: string;
 
-  @Column('int', { default: 0 })
-  tokenVersion: number;
+    @Column('int', { default: 0 })
+    tokenVersion: number;
 
-  @Field()
-  @Column('text', { unique: true })
-  email: string;
+    @Field()
+    @IsEmail()
+    @Column('text', { unique: true })
+    email: string;
 
-  @Column()
-  password: string;
+    @Column()
+    password: string;
 
-  @Field()
-  @Column({ default: 'sometetxt' })
-  test?: string;
+    @Field()
+    @Column({ default: 'sometetxt' })
+    testbig?: string;
 
-  @Field()
-  @Column({ default: 'sometetxt'})
-  testbig?: string;
+    @Field(() => [ Todo ])
+    @OneToMany(() => Todo, (todo) => todo.ownerId)
+    todos: Todo[]
 }

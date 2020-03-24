@@ -15,13 +15,14 @@ import { AuthInput, AuthResponseWeb, MyContext } from '../graphql-types';
 
 @Resolver()
 export class AuthResolver {
-  // ==============================================================================================
-  // Register Web
-  // ==============================================================================================
-  @Mutation(() => AuthResponseWeb)
+    // ==============================================================================================
+    // Register Web
+    // ==============================================================================================
+    @Mutation(() => AuthResponseWeb)
     async registerWeb(
-    @Arg('input') { email, password }: AuthInput,
-    @Ctx() { res }: MyContext,
+        @Arg('input') { email, password }: AuthInput,
+        // eslint-disable-next-line @typescript-eslint/indent
+        @Ctx() { res }: MyContext,
     ): Promise<AuthResponseWeb> {
         const existingUser = await User.findOne({ email });
 
@@ -31,6 +32,7 @@ export class AuthResolver {
 
         const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
 
+        // TODO: implement User.insert()
         const user = await User.create({
             email,
             password: hashedPassword,
@@ -45,44 +47,45 @@ export class AuthResolver {
         };
     }
 
-  // ----------------------------------------------------------------------------------------------
-  // Login Web
-  // ----------------------------------------------------------------------------------------------
-  @Mutation(() => AuthResponseWeb)
-  async loginWeb(
-    @Arg('input') { email, password }: AuthInput,
-    @Ctx() { res }: MyContext,
-  ): Promise<AuthResponseWeb> {
-      const user = await User.findOne({ where: { email } });
+    // ----------------------------------------------------------------------------------------------
+    // Login Web
+    // ----------------------------------------------------------------------------------------------
+    @Mutation(() => AuthResponseWeb)
+    async loginWeb(
+        @Arg('input') { email, password }: AuthInput,
+        // eslint-disable-next-line @typescript-eslint/indent
+        @Ctx() { res }: MyContext,
+    ): Promise<AuthResponseWeb> {
+        const user = await User.findOne({ where: { email }});
 
-      if (!user) {
-          throw new UserInputError('login');
-      }
+        if (!user) {
+            throw new UserInputError('The username or password you have entered is incorrect.');
+        }
 
-      const valid = await bcrypt.compare(password, user.password);
+        const valid = await bcrypt.compare(password, user.password);
 
-      if (!valid) {
-          throw new UserInputError('login');
-      }
+        if (!valid) {
+            throw new UserInputError('The username or password you have entered is incorrect.');
+        }
 
-      const accessToken = createAccessToken(user);
-      sendRefreshToken(res, createRefreshToken(user));
+        const accessToken = createAccessToken(user);
+        sendRefreshToken(res, createRefreshToken(user));
 
-      return {
-          user,
-          accessToken,
-      };
-  }
+        return {
+            user,
+            accessToken,
+        };
+    }
 
-  // ----------------------------------------------------------------------------------------------
-  // Logout Web
-  // ----------------------------------------------------------------------------------------------
-  @Mutation(() => Boolean)
-  logout(
-    @Ctx() { res }: MyContext,
-  ): Boolean {
-      sendRefreshToken(res, '');
+    // ----------------------------------------------------------------------------------------------
+    // Logout Web
+    // ----------------------------------------------------------------------------------------------
+    @Mutation(() => Boolean)
+    logout(
+        @Ctx() { res }: MyContext,
+    ): Boolean {
+        sendRefreshToken(res, '');
 
-      return true;
-  }
+        return true;
+    }
 }

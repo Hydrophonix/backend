@@ -23,7 +23,7 @@ export const isAuth:MiddlewareFn<MyContext> = ({ context }, next) => {
         token = verify(tokenKey, ACCESS_TOKEN_SECRET);
         context.userId = token.userId as string;
     } catch (error) {
-        console.log(error);
+        console.log('isAuth', error.name, error.message);
         throw new AuthenticationError('not authenticated');
     }
 

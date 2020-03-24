@@ -57,6 +57,7 @@ rules:
     valid-typeof: 2
 
         # ESLint: base practices
+    indent: 0
     accessor-pairs: 2
     array-callback-return: 2
     block-scoped-var: 2
@@ -161,6 +162,11 @@ rules:
     no-process-exit: 2
     no-restricted-modules: 2
     no-sync: 0
+    object-curly-spacing:
+        - 2
+        - always
+        - arraysInObjects: false
+          objectsInObjects: false
     array-bracket-newline:
         - 2
         - multiline: true
@@ -214,10 +220,6 @@ rules:
         - cb
     id-length: 0
     implicit-arrow-linebreak: error
-    indent:
-        - 2
-        - 4
-        - SwitchCase: 1
     jsx-quotes:
         - 2
         - prefer-single
@@ -328,3 +330,18 @@ rules:
 
         # TypeScript
     "@typescript-eslint/no-unused-vars": 2
+    "@typescript-eslint/indent":
+    - 2
+    - 4
+    - SwitchCase: 1
+      MemberExpression: 1
+      ArrayExpression: 1
+      ObjectExpression: 1
+      FunctionDeclaration:
+          parameters: first
+          body: 1
+      FunctionExpression:
+          parameters: first
+          body: 1
+      CallExpression:
+          arguments: first
