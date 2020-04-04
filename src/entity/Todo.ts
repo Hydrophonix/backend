@@ -16,8 +16,8 @@ export class Todo extends BaseEntity {
     @Column()
     title: string;
 
-    @Field()
-    @Column()
+    @Field(() => String, { nullable: true })
+    @Column({ nullable: true })
     text?: string;
 
     @Field(() => Boolean)

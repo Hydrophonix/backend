@@ -4,7 +4,7 @@ import { ApolloServer } from 'apollo-server-express';
 import { buildSchema } from 'type-graphql';
 
 // App
-import { app } from './server';
+import { app } from './app';
 
 // Resolvers
 import { AuthResolver, UserResolver, TodoResolver } from './resolvers';

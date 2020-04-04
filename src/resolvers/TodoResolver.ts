@@ -10,6 +10,9 @@ import {
 // Entities
 import { Todo } from '../entity';
 
+// Instruments
+import { formatInput } from '../utils';
+
 // Types
 import { MyContext, TodoInput, TodoUpdateInput } from '../graphql-types';
 
@@ -27,7 +30,7 @@ export class TodoResolver {
         @Ctx() { userId }: MyContext,
     ): Promise<Todo> {
         const todo = await Todo.create({
-            ...input,
+            ...formatInput(input),
             ownerId: userId,
         }).save();
 
@@ -40,7 +43,7 @@ export class TodoResolver {
         // eslint-disable-next-line @typescript-eslint/indent
         @Arg('input', () => TodoUpdateInput) input: TodoUpdateInput,
     ) {
-        const updatedTodo = await Todo.update({ id }, input);
+        const updatedTodo = await Todo.update({ id }, formatInput(input));
 
         return updatedTodo;
     }
