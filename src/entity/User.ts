@@ -28,7 +28,7 @@ export class User extends BaseEntity {
     @Column({ default: 'sometetxt' })
     testbig?: string;
 
-    @Field(() => [ Todo ])
-    @OneToMany(() => Todo, (todo) => todo.ownerId)
+    @Field(() => [ Todo ], { nullable: true })
+    @OneToMany(() => Todo, (todo) => todo.ownerId, { nullable: true, cascade: true, eager: true })
     todos: Todo[]
 }

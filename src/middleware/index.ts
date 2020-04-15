@@ -1,2 +1,2 @@
-export * from './isAuth';
+export * from './auth';
 export * from './isEmailAlreadyExist';

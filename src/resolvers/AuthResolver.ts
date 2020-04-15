@@ -27,7 +27,7 @@ export class AuthResolver {
         const existingUser = await User.findOne({ email });
 
         if (existingUser) {
-            throw new UserInputError('Register');
+            throw new UserInputError('User with email you have entered is already exist');
         }
 
         const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);

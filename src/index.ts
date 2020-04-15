@@ -1,6 +1,6 @@
 // Core
 import 'reflect-metadata';
-import { ApolloServer } from 'apollo-server-express';
+import { ApolloServer, PubSub } from 'apollo-server-express';
 import { buildSchema } from 'type-graphql';
 
 // App
@@ -11,7 +11,7 @@ import { AuthResolver, UserResolver, TodoResolver } from './resolvers';
 
 // Instruments
 import { connectDatabase } from './database';
-import { PORT } from './constants';
+import { PORT, IS_DEV } from './constants';
 import { formatValidationError } from './utils';
 
 (async () => {
@@ -26,8 +26,10 @@ import { formatValidationError } from './utils';
     // https://www.apollographql.com/docs/apollo-server/api/apollo-server/
     const apolloServer = new ApolloServer({
         schema,
-        context:     ({ req, res }) => ({ req, res }),
-        formatError: formatValidationError,
+        context:       ({ req, res }) => ({ req, res, pubsub: new PubSub() }),
+        formatError:   formatValidationError,
+        playground:    IS_DEV,
+        introspection: IS_DEV,
     });
 
     apolloServer.applyMiddleware({ app, cors: false });

@@ -5,13 +5,17 @@ import {
     Arg,
     Query,
     Ctx,
+    UseMiddleware,
+    Info,
 } from 'type-graphql';
+import { ApolloError } from 'apollo-server-express';
+import { GraphQLResolveInfo } from 'graphql';
 
 // Entities
 import { Todo } from '../entity';
 
 // Instruments
-import { formatInput } from '../utils';
+import { isAuthOptional } from '../middleware';
 
 // Types
 import { MyContext, TodoInput, TodoUpdateInput } from '../graphql-types';
@@ -19,18 +23,25 @@ import { MyContext, TodoInput, TodoUpdateInput } from '../graphql-types';
 @Resolver()
 export class TodoResolver {
     @Query(() => [ Todo ])
-    todos() {
+    todos(
+    @Info() info: GraphQLResolveInfo,
+    ) {
+        if (info.fieldNodes[ 0 ].selectionSet) {
+            console.log('"|_(ʘ_ʘ)_/" =>: TodoResolver -> info', info.fieldNodes[ 0 ].selectionSet.selections);
+        }
+
         return Todo.find();
     }
 
     @Mutation(() => Todo)
+    @UseMiddleware(isAuthOptional)
     async createTodo(
         @Arg('input', () => TodoInput) input: TodoInput,
         // eslint-disable-next-line @typescript-eslint/indent
         @Ctx() { userId }: MyContext,
     ): Promise<Todo> {
         const todo = await Todo.create({
-            ...formatInput(input),
+            ...input,
             ownerId: userId,
         }).save();
 
@@ -39,19 +50,25 @@ export class TodoResolver {
 
     @Mutation(() => Todo)
     async updateTodo(
-    @Arg('id') id: string,
+        @Arg('id') id: string,
         // eslint-disable-next-line @typescript-eslint/indent
         @Arg('input', () => TodoUpdateInput) input: TodoUpdateInput,
-    ) {
-        const updatedTodo = await Todo.update({ id }, formatInput(input));
+    ): Promise<Partial<Todo>> {
+        const todo = await Todo.findOne(id);
 
-        return updatedTodo;
+        if (!todo) {
+            throw new ApolloError('Todo not found');
+        }
+
+        Object.assign(todo, input);
+
+        return todo.save();
     }
 
-    @Mutation(() => Boolean)
-    async deleteTodo(@Arg('id', () => String) id: string): Promise<boolean> {
+    @Mutation(() => String)
+    async deleteTodo(@Arg('id') id: string): Promise<string> {
         await Todo.delete({ id });
 
-        return true;
+        return id;
     }
 }

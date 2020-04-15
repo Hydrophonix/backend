@@ -6,6 +6,8 @@ services:
     image: postgres:10
     container_name: database
     restart: always
+    # volumes:
+    #   - ./db:/var/lib/postgresql/data
     ports:
       - 5432:5432
     environment:

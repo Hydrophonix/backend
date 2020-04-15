@@ -1,6 +1,7 @@
 // Env
 export const APP_NAME = process.env.APP_NAME || 'test';
 export const NODE_ENV = process.env.NODE_ENV || 'development';
+export const IS_DEV = NODE_ENV === 'development';
 export const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET || 'superSecretOne';
 export const REFRESH_TOKEN_SECRET = process.env.REFRESH_TOKEN_SECRET || 'superSecretTwo';
 export const PORT: number | string = process.env.PORT || 4000;

@@ -21,7 +21,7 @@ export const refreshToken = async (req: Request, res: Response) => {
         return res.send(NO_TOKEN);
     }
 
-    let token: any  = null;
+    let token: any = null;
 
     try {
         token = verify(tokenKey, REFRESH_TOKEN_SECRET!);
