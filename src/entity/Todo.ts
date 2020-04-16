@@ -28,7 +28,7 @@ export class Todo extends BaseEntity {
     @Column({ nullable: true })
     ownerId?: string;
 
-    @ManyToOne(() => User, (user) => user.todos)
-    @JoinColumn({ name: 'ownerId' })
+    @ManyToOne(() => User, (user) => user.todos, { nullable: true })
+    @JoinColumn()
     owner?: User
 }

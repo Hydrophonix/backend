@@ -27,7 +27,7 @@ export class UserResolver {
         if (info.fieldNodes[ 0 ].selectionSet) {
             // console.log('"|_(ʘ_ʘ)_/" =>: TodoResolver -> info', info.fieldNodes[ 0 ].selectionSet.selections);
         }
-        const user = await User.find({ relations: [ 'todos' ]});
+        const user = await User.find();
         console.log('"|_(ʘ_ʘ)_/" =>: user', user);
 
         return user;
