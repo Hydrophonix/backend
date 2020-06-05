@@ -75,7 +75,10 @@ rules:
     no-case-declarations: 2
     no-div-regex: 2
     no-else-return: 2
-    no-empty-function: 2
+    no-empty-function: 
+        - 2
+        - allow:
+            - constructors
     no-empty-pattern: 2
     no-eq-null: 2
     no-eval: 2
@@ -110,7 +113,7 @@ rules:
     no-return-assign:
         - 2
         - except-parens
-    no-return-await: 2
+    no-return-await: 0
     no-script-url: 2
     no-self-assign:
         - 2

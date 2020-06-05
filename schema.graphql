@@ -1,0 +1,53 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+input AuthInput {
+  email: String!
+  password: String!
+}
+
+type AuthResponseWeb {
+  accessToken: String!
+  user: User!
+}
+
+type Mutation {
+  loginWeb(input: AuthInput!): AuthResponseWeb!
+  registerWeb(input: AuthInput!): AuthResponseWeb!
+
+  """test description"""
+  createTodo(input: TodoInput!): Todo!
+  updateTodo(input: TodoUpdateInput!, id: String!): Todo!
+  deleteTodo(id: String!): String!
+}
+
+type Query {
+  me: User!
+  users: [User!]
+  todos: [Todo!]!
+}
+
+type Todo {
+  id: ID!
+  title: String!
+  text: String
+  done: Boolean!
+}
+
+input TodoInput {
+  title: String!
+  text: String
+}
+
+input TodoUpdateInput {
+  title: String
+  text: String
+  done: Boolean
+}
+
+type User {
+  id: ID!
+  email: String!
+  testbig: String!
+}
