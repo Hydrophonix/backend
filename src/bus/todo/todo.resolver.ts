@@ -1,11 +1,11 @@
 // Core
 import { Resolver, Args, Mutation, Query } from '@nestjs/graphql';
+import { ApolloError } from 'apollo-server-express';
 
 // Instruments
 import { Todo } from './todo.entity';
 import { TodoService } from './todo.service';
 import { TodoInput, TodoUpdateInput } from './todo.inputs';
-import { ApolloError } from 'apollo-server-express';
 
 
 @Resolver('Todo')

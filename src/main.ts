@@ -1,6 +1,6 @@
 // Core
 import { NestFactory } from '@nestjs/core';
-import { Logger } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import cookieParser from 'cookie-parser';
 
@@ -13,8 +13,14 @@ async function bootstrap() {
     const port = configService.get('PORT') ?? 4000;
 
     app.use(cookieParser());
+    app.useGlobalPipes(new ValidationPipe());
     app.enableCors({
-        origin:      'http://localhost:3000',
+        origin: [
+            'http://localhost:3000',
+            'http://localhost:80',
+            'http://localhost',
+            'http://46.101.215.145',
+        ],
         credentials: true,
     });
 

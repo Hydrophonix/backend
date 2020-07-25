@@ -1,10 +1,10 @@
 // Core
 import { ObjectType, Field, ID } from '@nestjs/graphql';
 import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from 'typeorm';
-import { IsEmail } from 'class-validator';
+// import { IsEmail } from 'class-validator';
 
 // Entity
-// import { Todo } from './Todo';
+
 
 @ObjectType()
 @Entity()
@@ -13,22 +13,34 @@ export class User extends BaseEntity {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
-    @Column('int', { default: 0 })
-    tokenVersion: number;
-
-    @Field()
-    @IsEmail()
-    @Column('text', { unique: true })
-    email: string;
+    // @Field()
+    // @Column('text', { unique: true })
+    // email: string;
 
     @Column()
     password: string;
 
-    @Field()
-    @Column({ default: 'sometetxt' })
-    testbig?: string;
+    @Field(() => String)
+    @Column()
+    name: string;
 
-    // @Field(() => [ Todo ], { nullable: true })
-    // @OneToMany(() => Todo, (todo) => todo.ownerId, { nullable: true })
-    // todos: Todo[]
+    // @Field(() => String, { nullable: true })
+    // @Column({ nullable: true })
+    // phone?: string;
+
+    @Column('int', { default: 0 })
+    tokenVersion: number;
+
+    // ================================================================================================================
+    // Relations
+    // ================================================================================================================
+
+    // @Field(() => [ Project ])
+    // @OneToMany(() => Project, (project: Project) => project.ownerId, { onDelete: 'CASCADE' })
+    // projects: Project[]
+
+    // Todo: add projects by invites & User Roles
+    // @Field(() => [ Project ], { nullable: true })
+    // @OneToMany(() => Project, (project: Project) => project.ownerId)
+    // projects: Project[]
 }

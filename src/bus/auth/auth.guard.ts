@@ -3,7 +3,7 @@ import { Injectable, CanActivate, Inject, ExecutionContext, UnauthorizedExceptio
 import { GqlExecutionContext } from '@nestjs/graphql';
 
 // Instruments
-import { MyContext } from '../../graphql/graphql.interfaces';
+import { IContext } from '../../graphql/graphql.interfaces';
 import { AuthService } from './auth.service';
 import { IAccessTokenPayload } from './auth.interfaces';
 
@@ -11,8 +11,8 @@ import { IAccessTokenPayload } from './auth.interfaces';
 export class AuthGuard implements CanActivate {
     static isAccessToken(token: object): token is IAccessTokenPayload {
         return (
-            // eslint-disable-next-line no-extra-parens
-            typeof (token as IAccessTokenPayload).id === 'string'
+            typeof (token as IAccessTokenPayload).id === 'string' // eslint-disable-line no-extra-parens
+            && typeof (token as IAccessTokenPayload).name === 'string' // eslint-disable-line no-extra-parens
         );
     }
 
@@ -24,7 +24,7 @@ export class AuthGuard implements CanActivate {
     canActivate(
         context: ExecutionContext,
     ): boolean {
-        const ctx = GqlExecutionContext.create(context).getContext<MyContext>();
+        const ctx = GqlExecutionContext.create(context).getContext<IContext>();
         const headerTokenKey = ctx.req.headers.authorization;
 
         if (!headerTokenKey) {
@@ -38,9 +38,9 @@ export class AuthGuard implements CanActivate {
         }
 
         if (AuthGuard.isAccessToken(token)) {
-            const { id } = token;
+            const user = { id: token.id, name: token.name };
 
-            ctx.user = { id };
+            ctx.user = user;
 
             return true;
         }

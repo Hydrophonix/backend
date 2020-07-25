@@ -1,10 +1,13 @@
 // Core
 import { Response, Request } from 'express';
 
-export interface MyContext {
-    req: Request,
-    res: Response,
-    user?: {
-        id: string
-    }
+export interface IContextUser {
+    id: string;
+    name: string;
+}
+
+export interface IContext {
+    req: Request;
+    res: Response;
+    user?: IContextUser;
 }

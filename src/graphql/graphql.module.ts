@@ -3,7 +3,7 @@ import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 
 // Instruments
-import { MyContext } from './graphql.interfaces';
+import { IContext } from './graphql.interfaces';
 
 @Module({
     imports: [
@@ -15,7 +15,7 @@ import { MyContext } from './graphql.interfaces';
             autoSchemaFile: 'schema.graphql',
             cacheControl:   true,
             cors:           false,
-            context:        ({ req, res }) => ({ req, res } as MyContext),
+            context:        ({ req, res }): IContext=> ({ req, res }),
         }),
     ],
 })

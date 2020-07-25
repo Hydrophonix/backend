@@ -2,8 +2,10 @@
 import { Module, forwardRef } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
+// Modules
+import { AuthModule } from '../Auth/auth.module';
+
 // Instruments
-import { AuthModule } from '../auth/auth.module';
 import { User } from './user.entity';
 import { UserResolver } from './user.resolver';
 import { UserService } from './user.service';

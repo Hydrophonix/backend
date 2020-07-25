@@ -3,7 +3,7 @@
 # ------------------------------------------------------
 
 input AuthInput {
-  email: String!
+  name: String!
   password: String!
 }
 
@@ -13,8 +13,12 @@ type AuthResponseWeb {
 }
 
 type Mutation {
+  updateMe(input: UserUpdateInput!): User!
+  deleteMe: Boolean!
   loginWeb(input: AuthInput!): AuthResponseWeb!
   registerWeb(input: AuthInput!): AuthResponseWeb!
+  logoutWeb: Boolean!
+  forceLogoutWeb: Boolean!
 
   """test description"""
   createTodo(input: TodoInput!): Todo!
@@ -24,7 +28,6 @@ type Mutation {
 
 type Query {
   me: User!
-  users: [User!]
   todos: [Todo!]!
 }
 
@@ -48,6 +51,11 @@ input TodoUpdateInput {
 
 type User {
   id: ID!
-  email: String!
-  testbig: String!
+  name: String!
+}
+
+input UserUpdateInput {
+  phone: String
+  name: String
+  email: String
 }

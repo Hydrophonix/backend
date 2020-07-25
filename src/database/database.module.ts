@@ -4,8 +4,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 
 // Entities
-import { User } from '../bus/user/user.entity';
-import { Todo } from '../bus/todo/todo.entity';
+import { User } from '../bus/User/user.entity';
+import { Todo } from '../bus/Todo/todo.entity';
 
 @Module({
     imports: [
@@ -15,8 +15,8 @@ import { Todo } from '../bus/todo/todo.entity';
             useFactory: (configService: ConfigService) => ({
                 type:        'postgres',
                 url:         configService.get('DATABASE_URL'),
-                dropSchema:  false,
-                synchronize: true,  // switch this to false once you have the initial tables created and use migrations instead
+                dropSchema:  configService.get('NODE_ENV') !== 'production' || false,
+                synchronize: configService.get('NODE_ENV') !== 'production' || true,
                 logging:     false,
                 entities:    [ Todo, User ],
                 migrations:  [ 'src/migration/**/*.ts' ],

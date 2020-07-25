@@ -1,37 +1,67 @@
 // Core
-import { Resolver, Query, Context } from '@nestjs/graphql';
-
-// Instrumenta
-import { User } from './user.entity';
-import { UserService } from './user.service';
+import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { UseGuards } from '@nestjs/common';
 
-// Instruments
-import { AuthGuard } from '../auth/auth.guard';
-import { MyContext } from '../../graphql/graphql.interfaces';
+// Entities
+import { User } from './user.entity';
 
-@Resolver('User')
+// Services
+import { UserService } from './user.service';
+
+// Instruments
+import { IContextUser } from '../../graphql/graphql.interfaces';
+import { CurrentUser } from '../Auth/auth.decorators';
+import { AuthGuard } from '../Auth/auth.guard';
+import { UserUpdateInput } from './user.inputs';
+
+@Resolver(() => User)
 export class UserResolver {
     constructor(
         private readonly userService: UserService,
     ) {}
 
+    // ================================================================================================================
+
     @Query(() => User)
     @UseGuards(AuthGuard)
-    async me(@Context() ctx: MyContext) {
-        console.log('"|_(ʘ_ʘ)_/" =>: UserResolver -> me -> ctx', ctx.user);
-        const users = await this.userService.findAll();
-
-        return users[ 0 ];
+    me(@CurrentUser() { id }: IContextUser) {
+        return this.userService.findOneById(id);
     }
 
-    @Query(() => [ User ], { nullable: true })
-    users(
-    // @Info() info: GraphQLResolveInfo,
-    ) {
-        // if (info.fieldNodes[ 0 ].selectionSet) {
-        //     // console.log('"|_(ʘ_ʘ)_/" =>: TodoResolver -> info', info.fieldNodes[ 0 ].selectionSet.selections);
-        // }
-        return this.userService.findAll();
+    // ================================================================================================================
+
+    // @Query(() => [ User ])
+    // users() {
+    //     return this.userService.findAll();
+    // }
+
+    // ================================================================================================================
+
+    @Mutation(() => User)
+    @UseGuards(AuthGuard)
+    updateMe(
+        @Args('input') input: UserUpdateInput,
+        @CurrentUser() { id }: IContextUser,  // eslint-disable-line @typescript-eslint/indent
+    ): Promise<User> {
+        return this.userService.updateOneById(id, input);
     }
+
+    // ================================================================================================================
+
+    @Mutation(() => Boolean)
+    @UseGuards(AuthGuard)
+    deleteMe(
+        @CurrentUser() { id }: IContextUser,
+    ): Promise<boolean> {
+        return this.userService.deleteOneById(id);
+    }
+
+    // ================================================================================================================
+    // Relations
+    // ================================================================================================================
+
+    // @ResolveField()
+    // projects(@Parent() { id }: User): Promise<Project[]> {
+    //     return this.projectService.findOwnedProjects(id);
+    // }
 }
