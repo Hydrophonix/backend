@@ -1,0 +1,283 @@
+/* http://meyerweb.com/eric/tools/css/reset/
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+
+@font-face {
+    font-family: 'Helvetica Neue Regular';
+    src: url('fonts/helveticaneue-thin-webfont.eot');
+    src: url('fonts/helveticaneue-thin-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/helveticaneue-thin-webfont.woff2') format('woff2'),
+         url('fonts/helveticaneue-thin-webfont.woff') format('woff'),
+         url('fonts/helveticaneue-thin-webfont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Helvetica Neue Bold';
+    src: url('fonts/HelveticaNeueBold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Helvetica Neue Normal';
+    src: url('fonts/HelveticaNeueCyr-Roman.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.wrapper {
+  position: relative;
+  font-family: 'Helvetica Neue Normal', Tahoma, sans-serif;
+  font-weight: normal;
+  font-size: 18px;
+  box-sizing: border-box;
+  width: 21cm;
+  /* height: 29.6cm; */
+  background-color: #FAFAFA;
+}
+
+header {
+  display: -webkit-flex;
+  display: -ms-flex;
+  display: flex;
+  padding: 0 25px;
+  width: 100%;
+  box-sizing: border-box;
+  height: 200px;
+}
+
+.sign {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 5px;
+  font-size: 13px;
+}
+
+.avatar {
+  display: -webkit-flex;
+  display: -ms-flex;
+  display: flex;
+  -webkit-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+  width: 150px;
+  height: 200px;
+}
+
+.avatar img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 100%;
+}
+
+.header__info {
+  padding: 25px;
+  box-sizing: border-box;
+}
+
+.header__info h1 {
+  font-size: 35px;
+  font-weight: normal;
+}
+
+.header__info h2 {
+  padding-top: 10px;
+  color: #3f59a8;
+  font-weight: normal;
+}
+
+nav {
+  box-sizing: border-box;
+  padding: 15px;
+  display: -webkit-flex;
+  display: -ms-flex;
+  display: flex;
+  width: 100%;
+  /* height: 150px; */
+  background-color: #3f59a8;
+  color: #FFF;
+}
+
+.nav__left, .nav__right,
+.main__left, .main__right {
+  width: 50%;
+  box-sizing: border-box;
+}
+
+.main__left {
+  padding-right: 20px;
+}
+
+.skype,
+.location,
+.mail,
+.phone,
+.calendar,
+.github {
+  display: -webkit-flex;
+  display: -ms-flex;
+  display: flex;
+  -webkit-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+  margin-bottom: 15px;
+  font-weight: normal;
+}
+
+.skype img,
+.location img,
+.mail img,
+.phone img,
+.calendar img,
+.github img
+ {
+  max-width: 20px;
+  height: auto;
+  margin-right: 15px;
+}
+
+.github,
+.skype,
+.mail,
+.phone {
+  text-decoration: none;
+  color: #FFF;
+}
+
+main {
+  box-sizing: border-box;
+  padding: 25px;
+  display: -webkit-flex;
+  display: -ms-flex;
+  display: flex;
+}
+
+.work {
+  box-sizing: border-box;
+  padding: 130px 25px 0;
+}
+
+.education,
+.lagnuages,
+.tech__skill,
+.soft__skill {
+  margin-bottom: 10px;
+}
+
+main h3, .work h3 {
+  color: #3f59a8;
+  font-size: 25px;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+main span, .work span {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+main p, .work p {
+  font-weight: normal;
+  font-size: 16px;
+  margin-bottom: 5px;
+  line-height: 18px;
+}
+
+main i, .work i {
+  font-size: 14px;
+  color: #3f59a8;
+  font-style: italic;
+  margin-bottom: 15px;
+}
+
+main b, .work b {
+  font-weight: bold;
+}
+
+.line {
+  height: 2px;
+  background-color: lightgray;
+  margin: 7px 0;
+}
+
+.skills,
+.interests {
+  display: -webkit-flex;
+  display: -ms-flex;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.skills div {
+  padding: 8px;
+  margin-right: 8px;
+  margin-bottom: 8px;
+  border-radius: 5px;
+  background-color: #3f59a8;
+  color: #fff;
+}
+
+.interests div {
+  padding: 8px;
+  margin-right: 8px;
+  margin-bottom: 8px;
+  border-radius: 5px;
+  border: 2px solid grey;
+}
+
+.objective {
+  margin-top: 40px;
+  margin-bottom: 10px;
+} 

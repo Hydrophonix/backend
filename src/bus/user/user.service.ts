@@ -43,8 +43,8 @@ export class UserService {
 
     // ================================================================================================================
 
-    findOneByEmail(email: string): Promise<User | undefined> {
-        return this.userRepository.findOne({ where: { email }});
+    findOneByName(name: string): Promise<User | undefined> {
+        return this.userRepository.findOne({ where: { name }});
     }
 
     // ================================================================================================================

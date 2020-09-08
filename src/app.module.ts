@@ -8,6 +8,7 @@ import { GraphqlModule } from './graphql/graphql.module';
 import { AuthModule } from './bus/Auth/auth.module';
 import { UserModule } from './bus/User/user.module';
 import { TodoModule } from './bus/Todo/todo.module';
+import { ResumeModule } from './bus/Resume/resume.module';
 
 @Module({
     imports: [
@@ -17,6 +18,7 @@ import { TodoModule } from './bus/Todo/todo.module';
         AuthModule,
         UserModule,
         TodoModule,
+        ResumeModule,
     ],
 })
 export class AppModule {}

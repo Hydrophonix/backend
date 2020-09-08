@@ -21,12 +21,8 @@ export class User extends BaseEntity {
     password: string;
 
     @Field(() => String)
-    @Column()
+    @Column('text', { unique: true })
     name: string;
-
-    // @Field(() => String, { nullable: true })
-    // @Column({ nullable: true })
-    // phone?: string;
 
     @Column('int', { default: 0 })
     tokenVersion: number;
@@ -34,13 +30,4 @@ export class User extends BaseEntity {
     // ================================================================================================================
     // Relations
     // ================================================================================================================
-
-    // @Field(() => [ Project ])
-    // @OneToMany(() => Project, (project: Project) => project.ownerId, { onDelete: 'CASCADE' })
-    // projects: Project[]
-
-    // Todo: add projects by invites & User Roles
-    // @Field(() => [ Project ], { nullable: true })
-    // @OneToMany(() => Project, (project: Project) => project.ownerId)
-    // projects: Project[]
 }

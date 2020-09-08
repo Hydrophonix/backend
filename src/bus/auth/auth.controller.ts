@@ -20,20 +20,20 @@ export class AuthController {
         private readonly userService: UserService,
     ) {}
 
-    @Post('auth/refresh_token')
+    @Post('refresh_token')
     @HttpCode(HttpStatus.OK)
     async refreshToken(@Req() req: Request, @Res() res: Response) {
         const tokenKey = this.authService.getRefreshTokenFromCookies(req);
 
         if (!tokenKey) {
-            return res.send(this.NO_TOKEN);
+            return res.status(HttpStatus.OK).send(this.NO_TOKEN);
         }
 
         // TODO: add types
         const token: any = this.authService.verifyRefreshToken(tokenKey);
 
         if (!token) {
-            return res.send(this.NO_TOKEN);
+            return res.status(HttpStatus.OK).send(this.NO_TOKEN);
         }
 
         // token is valid and
@@ -42,7 +42,7 @@ export class AuthController {
         const user = await this.userService.findOneById(token.id);
 
         if (!user || user.tokenVersion !== token.tokenVersion) {
-            return res.send(this.NO_TOKEN);
+            return res.status(HttpStatus.OK).send(this.NO_TOKEN);
         }
 
         const accessToken = this.authService.createAccessToken(user);

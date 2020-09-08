@@ -4,8 +4,6 @@ import { BadRequestException, Inject, UseGuards } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import bcrypt from 'bcryptjs';
 
-// Entities
-
 // Services
 import { AuthService } from './auth.service';
 import { UserService } from '../User/user.service';
@@ -34,7 +32,7 @@ export class AuthResolver {
         @Args('input') { name, password }: AuthInput,
         @Context() { res }: IContext, // eslint-disable-line @typescript-eslint/indent
     ): Promise<AuthResponseWeb> {
-        const user = await this.userService.findOneByEmail(name);
+        const user = await this.userService.findOneByName(name);
 
         if (!user) {
             throw new BadRequestException('Email-password combination you have entered is not valid');
@@ -64,7 +62,7 @@ export class AuthResolver {
         @Args('input') { name, password }: AuthInput,
         @Context() { res }: IContext, // eslint-disable-line @typescript-eslint/indent
     ): Promise<AuthResponseWeb> {
-        const existingUser = await this.userService.findOneByEmail(name);
+        const existingUser = await this.userService.findOneByName(name);
 
         if (existingUser) {
             throw new BadRequestException('User with email you have entered is already exist');
